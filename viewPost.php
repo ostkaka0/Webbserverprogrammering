@@ -16,11 +16,12 @@
 	if ($postId != 0) {
 		$conn = new PDO("mysql:host=127.0.0.1;dbname=slutprojekt;charset=UTF8","root","");
 		$post = loadPost($conn, $postId);
-		$title = $post->title;
-		$content = $post->content;
 	}
 
-	if (isset($post)) {
+	if ($post != null) {
+		$title = $post->title;
+		$content = $post->content;
+	} else {
 		echo "<p> Could not find topic! </p>";
 	}
 ?>
