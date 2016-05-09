@@ -6,33 +6,46 @@
 
 	$postId = isset($_GET['postId'])? $_GET['postId'] : 0;
 	$isTopicFound = false;
+	$posterID;
+	$topicID;
+	$title;
+	$content;
+	$creationDate;
+	$lastEditDate;
 
 	// Find topic:
 	if ($postId != 0) {
 		$conn = new PDO("mysql:host=127.0.0.1;dbname=slutprojekt;charset=UTF8","root","");
-		$sql = "select * from posts where id = postId";
-			$stmt = $conn->prepare($sql);
-			$success = $stmt->execute();
-			$row = $stmt->fetch();
+		$sql = "select * from posts where id = $postId";
+		$stmt = $conn->prepare($sql);
+		$isTopicFound = $stmt->execute();
+		$row = $stmt->fetch();
 
-			if (!$success) {
-				echo "<p> Ogilitigt konto! </p>";
-			}
-			else {
+		if (!$isTopicFound) {
+			echo "<p> Ogilitigt! </p>";
+		}
+		else {
 
-				$posterId = $row['id'];
+			$posterID = $row['userID'];
+			$topicID = $row['topicID'];
+			$title = $row['title'];
+			$content = $row['content'];
+			$creationDate = $row['creationDate'];
+			$lastEditDate = $row['lastEditDate'];
 
-				echo "<p> $posterId $posterId svamp $posterId $posterId </p>";
-			}
+			echo "<p> $title $title svamp $title $title </p>";
+		}
 	}
 
 	if (!$isTopicFound) {
 		echo "<p> Could not find topic! </p>";
 	}
+	else {
+	}
 ?>
 
-
-<p> Välkommen till en meningslös sida! </p>
+<h1><?=$title?></h1>
+<p><?=$content?></p>
 
 <?php
 	if ($isLoggedIn) {

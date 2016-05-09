@@ -1,5 +1,7 @@
 
 <?php
+	include_once("src/user.php");
+
 	session_start();
 
 	global $title;
@@ -7,22 +9,18 @@
 	global $isLoggedIn;
 	global $username;
 
-	function login() {
-		
-		$conn = new PDO("mysql:host=127.0.0.1;dbname=slutprojekt;charset=UTF8","root","");
-	
 
-		if (isset($_POST['username']) && isset($_POST['password'])) {
-			$isLoggedIn = login(conn, $_POST['username'], $_POST['password'])	
+	$conn = new PDO("mysql:host=127.0.0.1;dbname=slutprojekt;charset=UTF8","root","");
 
-			if ($isLoggedIn)
-				echo "<p> Fel lösenord eller användarnamn! </p>";
-			else
-				header("location: index.php");
-		}
+
+	if (isset($_POST['username']) && isset($_POST['password'])) {
+		$isLoggedIn = login($conn, $_POST['username'], $_POST['password']);
+
+		if ($isLoggedIn)
+			echo "<p> Fel lösenord eller användarnamn! </p>";
+		else
+			header("location: index.php");
 	}
-
-	login();
 
 ?>
 
