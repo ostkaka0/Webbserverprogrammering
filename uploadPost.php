@@ -33,16 +33,18 @@
 
 			
 
-			$sql = "insert into posts(userId, topicId, title, content) values($userId, $topicId, '$postTitle', '$postContent')";
+			$sql = "insert into posts(userId, topicId, title, content) values(:userId, :topicId, :postTitle, :postContent);";
+			
 			$stmt = $conn->prepare($sql);
-			$success = $stmt->execute();
+			$success = $stmt->execute(array(":userId"=>$userId,':topicId'=>$topicId, ':postTitle'=>$postTitle, ':postContent'=>$postContent));
 			$row = $stmt->fetch();
 
+			$postID = $conn->lastInsertId();
 
 			if (!$success)
 				echo "<p> Kunde inte skapa konto! </p>";
 			else 
-				header("location: index.php");
+				header("location: viewPost.php?postID=$postID");
 		}
 	}
 	

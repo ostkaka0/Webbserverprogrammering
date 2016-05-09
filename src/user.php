@@ -1,8 +1,8 @@
 <?php
 function login($conn, $username, $password) {
-	$sql = "select * from users where username = '$username'";
+	$sql = "select * from users where username = :username";
 	$stmt = $conn->prepare($sql);
-	$stmt->execute();
+	$stmt->execute(array(":username"=>$username));
 	$row = $stmt->fetch();
 
 	if (!$row)
